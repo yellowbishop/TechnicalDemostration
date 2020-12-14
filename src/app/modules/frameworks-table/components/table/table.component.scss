@@ -1,0 +1,43 @@
+//MIXIN
+@mixin dark-item {
+  background-color: black;
+  color: white;
+
+}
+
+.table-advanced-filters-container {
+  box-shadow: rgb(204, 255, 254);
+}
+
+.table-component-container {
+  margin: 10px 10px 10px 10px;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  max-height: 100% !important;
+  overflow-y: hidden;
+
+  .table-filters {
+    width: 30%;
+    height: auto;
+    margin-left: 10px;
+  }
+
+  .table-container {
+    overflow-y: auto;
+    width: 70%;
+    flex-grow: 1;
+    display: block;
+    height: auto !important;
+    contain: inherit;
+
+  }
+
+  .first-column-cell {
+    @include dark-item();
+    font-weight: bold;
+  }
+
+
+}

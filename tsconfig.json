@@ -12,6 +12,8 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "es2020",
+    "typeRoots": ["@types"],
+    "types": ["bootstrap"],
     "lib": [
       "es2018",
       "dom"

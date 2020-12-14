@@ -1,0 +1,82 @@
+  <div class="container-fluid table-component-container">
+
+    <!-- FILTERS -->
+    <form [formGroup]="formData" class="form-group table-filters">
+      <div class="form-row">
+        <div class="col-md-6 ">
+          <label for="framework">Framework</label>
+          <input formControlName="framework" type="text" class="form-control" id="framework" placeholder="Filtrar">
+          <div class="invalid-feedback" [ngStyle]="{'display':showFrameworkInvalid?'block':'none'}">
+            Introduzca al menos 3 carácteres.
+          </div>
+        </div>
+        <div class="col-md-6">
+          <button class="btn btn-link collapse-button form-button" type="button" aria-expanded="true"
+            aria-controls="collapseDdvancedFilters" (click)="toggleAdvancedFilters()">
+            <i class="fas fa-caret-right" *ngIf="!collapsableBlock?.classList.contains('show')"></i>
+            <i class="fas fa-caret-down" *ngIf="collapsableBlock?.classList.contains('show')"></i>
+            Filtros avanzados
+          </button>
+        </div>
+      </div>
+
+
+
+      <div #advancedFilterCollapsableBock class="collapse table-advanced-filters-container" id="advancedFilters">
+        <div class="form-row ">
+          <div class="col-md-6">
+            <label for="language">Lenguaje</label>
+            <input formControlName="language" type="text" class="form-control" id="language" placeholder="Lenguaje">
+            <div class="invalid-feedback" [ngStyle]="{'display':showLanguageInvalid?'block':'none'}">
+              Introduzca al menos 3 carácteres.
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="count">Nº de filas</label>
+            <input formControlName="count" type="number" class="form-control" id="searchFilter">
+            <div class="invalid-feedback" [ngStyle]="{'display':showCountInvalid?'block':'none'}">
+              Debe elegir un número entre 1 y 10.
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <!-- TABLE -->
+    <div class="table-container">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">URL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="frameworksObservable|async else tableLoading">
+            <div *ngIf="(frameworksObservable|async)?.length==0">
+              No hay datos
+            </div>
+            <ng-container *ngIf="(frameworksObservable|async)?.length!=0">
+              <tr *ngFor=" let framework of (frameworksObservable|async)">
+                <td class="first-column-cell" data-toggle="popover" title="Nombre completo"
+                  [attr.data-content]="framework.FullName">
+                  {{framework.Name}}</td>
+                <td><a [href]="framework.URL">{{framework.URL}}</a></td>
+              </tr>
+              {{this.enablePopovers()}}
+            </ng-container>
+          </ng-container>
+
+        </tbody>
+      </table>
+    </div>
+
+
+  </div>
+
+
+  <ng-template #tableLoading>
+    <div class="spinner-border text-info" role="status">
+      <span class="visually-hidden"></span>
+    </div>
+  </ng-template>
